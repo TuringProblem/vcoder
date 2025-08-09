@@ -1,0 +1,142 @@
+"use client"
+
+import { create } from "zustand"
+import type { Language } from "@/components/codelearn-studio/internal/types/analysis"
+import type * as monacoType from "monaco-editor"
+import { getTemplates } from "@/components/codelearn-studio/lib/api"
+import type { LspDiagnostic, HoverInfo } from "@/components/codelearn-studio/internal/types/lsp"
+
+type EditorMode = "default" | "vim"
+type ThemeMode = "dark" | "light"
+
+type HistoryItem = import("@/components/codelearn-studio/internal/types/analysis").AnalysisResponse
+
+type EditorStore = {
+  language: Language
+  editorMode: EditorMode
+  theme: ThemeMode
+  vimStatus: string
+  codeByLanguage: Record<Language, string>
+  editor?: monacoType.editor.IStandaloneCodeEditor
+  lspDiagnostics: LspDiagnostic[]
+  lspHover?: HoverInfo
+  setLspDiagnostics: (d: LspDiagnostic[]) => void
+  setLspHover: (h?: HoverInfo) => void
+  setLanguage: (l: Language) => void
+  setEditorMode: (m: EditorMode) => void
+  setTheme: (t: ThemeMode) => void
+  setVimStatus: (s: string) => void
+  setEditorInstance: (e: monacoType.editor.IStandaloneCodeEditor) => void
+  setCodeForLanguage: (l: Language, code: string) => void
+  setTemplateForLanguage: (l: Language) => void
+  saveCurrent: () => void
+  loadSaved: () => void
+  exportCode: () => void
+  exportReport: () => void
+  formatDocument: () => Promise<void>
+  history: HistoryItem[]
+  pushHistory: (h: HistoryItem) => void
+}
+
+const LS_KEYS = {
+  code: (lang: Language) => `cls-code-${lang}`,
+}
+
+const initialTemplates = getTemplates()
+
+export const useEditorStore = create<EditorStore>((set, get) => ({
+  language: "javascript",
+  editorMode: "default",
+  theme: "dark",
+  vimStatus: "",
+  codeByLanguage: {
+    javascript: initialTemplates.javascript,
+    typescript: initialTemplates.typescript,
+    python: initialTemplates.python,
+    java: initialTemplates.java,
+  },
+  lspDiagnostics: [],
+  lspHover: undefined,
+  setLspDiagnostics: (d) => set({ lspDiagnostics: d }),
+  setLspHover: (h) => set({ lspHover: h }),
+
+  history: [],
+  setLanguage: (l) => set({ language: l }),
+  setEditorMode: (m) => set({ editorMode: m }),
+  setTheme: (t) => set({ theme: t }),
+  setVimStatus: (s) => set({ vimStatus: s }),
+  setEditorInstance: (e) => set({ editor: e }),
+  setCodeForLanguage: (l, code) =>
+    set((state) => ({
+      codeByLanguage: {
+        ...state.codeByLanguage,
+        [l]: code,
+      },
+    })),
+  setTemplateForLanguage: (l) =>
+    set((state) => {
+      const t = initialTemplates[l]
+      return {
+        codeByLanguage: {
+          ...state.codeByLanguage,
+          [l]: t,
+        },
+      }
+    }),
+  saveCurrent: () => {
+    const { language, codeByLanguage } = get()
+    const code = codeByLanguage[language] || ""
+    localStorage.setItem(LS_KEYS.code(language), code)
+  },
+  loadSaved: () => {
+    const { language, setCodeForLanguage } = get()
+    const saved = localStorage.getItem(LS_KEYS.code(language))
+    if (typeof saved === "string") {
+      setCodeForLanguage(language, saved)
+    }
+  },
+  exportCode: () => {
+    const { language, codeByLanguage } = get()
+    const code = codeByLanguage[language] || ""
+    const blob = new Blob([code], { type: "text/plain;charset=utf-8" })
+    const a = document.createElement("a")
+    a.href = URL.createObjectURL(blob)
+    a.download =
+      language === "javascript"
+        ? "code.js"
+        : language === "typescript"
+          ? "code.ts"
+          : language === "python"
+            ? "code.py"
+            : "Main.java"
+    a.click()
+    URL.revokeObjectURL(a.href)
+  },
+  exportReport: () => {
+    const { history } = get()
+    const latest = history[history.length - 1]
+    const report = latest ? JSON.stringify(latest, null, 2) : JSON.stringify({ note: "No analysis available" }, null, 2)
+    const blob = new Blob([report], { type: "application/json" })
+    const a = document.createElement("a")
+    a.href = URL.createObjectURL(blob)
+    a.download = `analysis-report.json`
+    a.click()
+    URL.revokeObjectURL(a.href)
+  },
+  formatDocument: async () => {
+    const ed = get().editor
+    if (!ed) return
+    try {
+      await (ed as any).getAction("editor.action.formatDocument").run()
+    } catch {
+      // ignore
+    }
+  },
+  pushHistory: (h) =>
+    set((state) => {
+      const items = [...state.history, h]
+      return { history: items.slice(-10) }
+    }),
+}))
+
+

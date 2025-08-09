@@ -9,6 +9,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  build: {
+    outDir: 'builds',
+    emptyOutDir: true,
+  },
   server: {
     port: 5173,
     strictPort: true,

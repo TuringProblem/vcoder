@@ -6,11 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clean:js": "node scripts/clean-js.mjs"
   },
   "dependencies": {
     "@monaco-editor/react": "4.6.0",
     "@radix-ui/react-select": "2.0.0",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-tabs": "1.0.4",
+    "@tanstack/react-query": "5.51.21",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "lucide-react": "0.441.0",
@@ -19,13 +23,14 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "6.26.2",
-    "tailwind-merge": "2.5.2"
+    "tailwind-merge": "2.5.2",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "4.3.1",
     "@types/node": "22.7.4",
     "@types/react": "18.3.8",
     "@types/react-dom": "18.3.0",
+    "@vitejs/plugin-react": "4.3.1",
     "autoprefixer": "10.4.20",
     "postcss": "8.4.47",
     "shadcn-ui": "0.9.4",
