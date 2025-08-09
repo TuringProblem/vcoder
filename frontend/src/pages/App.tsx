@@ -1,12 +1,16 @@
 import * as React from 'react'
 import { CodeEditor } from '@/components/Editor'
 import { analyzeCode, type Feedback } from '@/lib/api'
+import { useEditorMode } from '@/lib/useEditorMode'
+import { ModeSelect } from '@/components/ModeSelect'
 
 export function App() {
   const [code, setCode] = React.useState<string>(`function hello(name: string) {\n  console.log('hello', name)\n}`)
   const [feedback, setFeedback] = React.useState<Feedback[]>([])
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
+  const [mode, setMode] = useEditorMode()
+  const statusBarRef = React.useRef<HTMLDivElement>(null)
 
   const onAnalyze = async () => {
     setLoading(true)
@@ -27,6 +31,7 @@ export function App() {
         <div className="p-3 border-b flex items-center gap-2">
           <h1 className="font-semibold">Code Analyzer</h1>
           <div className="ml-auto flex items-center gap-2">
+            <ModeSelect mode={mode} onChange={setMode} />
             <button
               onClick={onAnalyze}
               disabled={loading}
@@ -37,7 +42,8 @@ export function App() {
           </div>
         </div>
         <div className="flex-1">
-          <CodeEditor value={code} onChange={setCode} />
+          <CodeEditor value={code} onChange={setCode} mode={mode} statusBarRef={statusBarRef} />
+          <div ref={statusBarRef} className="h-6 border-t text-xs px-2 flex items-center text-gray-600 bg-gray-50" />
         </div>
         {error && <div className="p-2 text-sm text-red-600 border-t bg-red-50">{error}</div>}
       </div>
