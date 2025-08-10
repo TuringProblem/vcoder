@@ -15,7 +15,8 @@
       "@/components/*": ["src/components/*"],
       "@/pages/*": ["src/pages/*"],
       "@/lib/*": ["src/lib/*"],
-      "@/data/*": ["src/data/*"]
+      "@/data/*": ["src/data/*"],
+      "@/store/*": ["src/store/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

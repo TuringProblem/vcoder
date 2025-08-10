@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom"
+import { UserAvatarMenu } from "@/components/layout/UserAvatarMenu"
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col" data-testid="main-layout">
       <header className="border-b px-4 h-12 flex items-center gap-4">
-        <Link to="/" className="font-semibold">CodeLearn</Link>
+        <Link to="/" className="font-semibold" data-testid="brand-link">CodeLearn</Link>
         <nav className="ml-auto flex items-center gap-3 text-sm">
-          <Link className="underline" to="/course/javascript">Courses</Link>
-          <Link className="underline" to="/dashboard">Dashboard</Link>
+          <Link className="underline" to="/course/javascript" data-testid="nav-courses">Courses</Link>
+          <UserAvatarMenu />
         </nav>
       </header>
       <main className="flex-1">

@@ -111,7 +111,7 @@ export function MonacoEditor() {
   const isLspOn = language === "javascript" || language === "typescript"
 
   const monacoToolbar = (
-    <div className="absolute right-3 top-3 z-10 flex gap-1">
+    <div className="absolute right-3 top-3 z-10 flex gap-1" data-testid="editor-toolbar">
       <div
         className={`px-2 py-1 rounded-md text-xs border ${
           isLspOn ? "border-green-500 text-green-600 dark:text-green-400" : "border-yellow-500 text-yellow-600 dark:text-yellow-400"
@@ -121,13 +121,14 @@ export function MonacoEditor() {
       >
         {isLspOn ? "LSP: On" : "LSP: Off"}
       </div>
-      <Button size="icon" variant="secondary" aria-label="Quick fix (code actions)" onClick={handleQuickFix} disabled={!isLspOn}>
+      <Button size="icon" variant="secondary" aria-label="Quick fix (code actions)" onClick={handleQuickFix} disabled={!isLspOn} data-testid="quick-fix">
         <Wrench className="h-4 w-4" />
       </Button>
       <Button
         size="icon"
         variant="secondary"
         aria-label="Rename symbol"
+        data-testid="rename-symbol"
         onClick={() => {
           const monaco = (window as any).monaco as typeof import("monaco-editor")
           if (monaco && editorRef.current) renameSymbolAtCursor(monaco, editorRef.current)
@@ -140,6 +141,7 @@ export function MonacoEditor() {
         size="icon"
         variant="secondary"
         aria-label="Go to definition"
+        data-testid="go-to-definition"
         onClick={() => {
           const monaco = (window as any).monaco as typeof import("monaco-editor")
           if (monaco && editorRef.current) goToDefinition(monaco, editorRef.current)
@@ -152,6 +154,7 @@ export function MonacoEditor() {
         size="icon"
         variant="secondary"
         aria-label="Find references"
+        data-testid="find-references"
         onClick={() => {
           const monaco = (window as any).monaco as typeof import("monaco-editor")
           if (monaco && editorRef.current) findReferences(monaco, editorRef.current)

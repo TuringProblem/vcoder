@@ -23,32 +23,34 @@ export function LessonPage({ isPractice = false }: { isPractice?: boolean }) {
   )
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4" data-testid="lesson-page">
       {!isPractice && checking && (
         <div className="text-sm text-muted-foreground">Checking access…</div>
       )}
       {!isPractice && access && !access.allowed && (
-        <div className="text-sm text-red-600">{access.reason || "Locked"}</div>
+        <div className="text-sm text-red-600" data-testid="lesson-locked-reason">{access.reason || "Locked"}</div>
       )}
       {!isPractice && access && !access.allowed && access.redirectPath && (
         <div>
-          <button className="underline text-sm" onClick={() => navigate(access.redirectPath!)}>Go to unlocked lesson</button>
+          <button className="underline text-sm" data-testid="lesson-locked-redirect" onClick={() => navigate(access.redirectPath!)}>Go to unlocked lesson</button>
         </div>
       )}
       {!isPractice && access && !access.allowed ? null : (
       <>
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{section} — {lesson}</h1>
+        <h1 className="text-xl font-semibold" data-testid="lesson-title">{section} — {lesson}</h1>
         {/*<LanguageBadge language={language} />*/}
       </div>
 
       {!isPractice && (
-        <TheorySection>
-          <p>
-            This section explains the core concepts with examples. Adjust this copy to your curriculum and embed media as
-            needed.
-          </p>
-        </TheorySection>
+        <div className="flex justify-end">
+          {/* Dev view editor mode selector */}
+          <div data-testid="devview-mode-select">
+            {/* Reuse the toolbar ModeSelect by exposing it inline isn't straightforward here,
+                so we render a simple switch using the store. */}
+            <InlineModeSelect />
+          </div>
+        </div>
       )}
 
       <CodeExerciseEmbed
@@ -70,6 +72,7 @@ export function LessonPage({ isPractice = false }: { isPractice?: boolean }) {
         <div className="flex justify-end">
           <button
             className="px-3 py-1.5 rounded-md bg-black text-white"
+            data-testid="mark-complete"
             onClick={() =>
               completeMutation.mutate({ language: language as LanguageKey, section: section as SectionKey, lesson: lesson as `lesson-${number}` })
             }
@@ -80,6 +83,29 @@ export function LessonPage({ isPractice = false }: { isPractice?: boolean }) {
       )}
       </>
       )}
+    </div>
+  )
+}
+
+function InlineModeSelect() {
+  const mode = (window as any).useEditorModeFromStore?.() as any
+  // Fallback to direct store access to avoid extra imports
+  const store = (require("@/components/codelearn-studio/store") as any).useEditorStore
+  const current = store.getState().editorMode
+  const setMode = store.getState().setEditorMode
+  const value = current === "vim" ? "vim" : "standard"
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-xs text-muted-foreground">Editor mode</span>
+      <select
+        className="h-8 rounded-md border px-2 text-sm"
+        value={value}
+        onChange={(e) => setMode(e.target.value === "vim" ? "vim" : "default")}
+        data-testid="devview-mode-select-native"
+      >
+        <option value="standard">Default</option>
+        <option value="vim">Vim</option>
+      </select>
     </div>
   )
 }

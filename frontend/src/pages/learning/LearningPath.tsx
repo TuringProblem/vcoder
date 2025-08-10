@@ -26,7 +26,7 @@ const languageListDiplay = (language: string) => {
 }
 
 export function LearningPath() {
-  const { language = "javascript" } = useParams()
+  const { language = "" } = useParams()
   const navigate = useNavigate()
   const langKey = (language as LanguageKey) || "javascript"
   const { data, isLoading } = useProgress(langKey)
@@ -62,7 +62,7 @@ export function LearningPath() {
   }
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4" data-testid="learning-path-page">
       <div className="flex items-center justify-between">
         {languageListDiplay(language!)}
         <LanguageSwitcher value={language!} onChange={(v) => navigate(`/course/${v}`)} />
@@ -70,12 +70,12 @@ export function LearningPath() {
       {isLoading ? (
         <div className="text-sm text-muted-foreground">Loading progress…</div>
       ) : (
-        <Accordion type="single" collapsible className="space-y-2">
+        <Accordion type="single" collapsible className="space-y-2" data-testid="course-accordion">
           {sections.map((s) => {
             const unlocked = isSectionUnlocked(s.id)
             return (
-              <AccordionItem key={s.id} value={s.id} className={unlocked ? "" : "opacity-60"}>
-                <AccordionTrigger>
+              <AccordionItem key={s.id} value={s.id} className={unlocked ? "" : "opacity-60"} data-testid={`section-${s.id}`}>
+                <AccordionTrigger data-testid={`section-trigger-${s.id}`}>
                   <div className="flex items-center gap-2">
                     <ChevronDown className="h-4 w-4 opacity-70" />
                     <span>{s.title}</span>
@@ -83,7 +83,7 @@ export function LearningPath() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="space-y-1">
+                  <div className="space-y-1" data-testid={`section-content-${s.id}`}>
                     {Array.from({ length: 9 }).map((_, i) => renderLesson(s.id, i + 1))}
                   </div>
                 </AccordionContent>

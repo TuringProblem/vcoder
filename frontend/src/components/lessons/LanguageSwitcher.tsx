@@ -5,12 +5,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export function LanguageSwitcher({ value, onChange }: { value: string; onChange: (lang: string) => void }) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="min-w-[200px] h-10 px-3 capitalize" aria-label="Language">
+      <SelectTrigger className="min-w-[200px] h-10 px-3 capitalize" aria-label="Language" data-testid="language-switcher">
         <SelectValue placeholder="Language" />
       </SelectTrigger>
       <SelectContent>
         {Object.entries(LanguageList).map(([k, label]) => (
-          <SelectItem key={k} value={k}>
+          <SelectItem key={k} value={k} data-testid={`language-item-${k}`}>
             {label}
           </SelectItem>
         ))}

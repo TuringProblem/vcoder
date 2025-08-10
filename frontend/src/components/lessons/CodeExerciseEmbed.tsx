@@ -31,7 +31,7 @@ export function CodeExerciseEmbed({ context, initialCode, instructions }: CodeEx
   }, [context.language, initialCode, setLanguage, setCodeForLanguage])
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3" data-testid="code-exercise-embed">
       <div className="space-y-2">
         {/* just cleaning this up for now... may use this somewhere else like the beginning*/}
         {/*<LanguageSelector lockedLanguage={context.language} />*/}
