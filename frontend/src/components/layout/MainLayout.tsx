@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import { UserAvatarMenu } from "@/components/layout/UserAvatarMenu"
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,7 +7,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
         <Link to="/" className="font-semibold" data-testid="brand-link">CodeLearn</Link>
         <nav className="ml-auto flex items-center gap-3 text-sm">
           <Link className="underline" to="/course/javascript" data-testid="nav-courses">Courses</Link>
-          <UserAvatarMenu />
+          <Link className="underline" to="/dashboard" data-testid="nav-dashboard">Dashboard</Link>
         </nav>
       </header>
       <main className="flex-1">
