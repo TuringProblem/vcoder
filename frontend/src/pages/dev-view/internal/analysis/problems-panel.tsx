@@ -1,10 +1,10 @@
 "use client"
 
-import type { LspDiagnostic } from "@/components/codelearn-studio/internal/types/lsp"
+import type { LspDiagnostic } from "@/types/lsp"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { AlertCircle } from "lucide-react"
-import { useEditorStore } from "@/components/codelearn-studio/store"
+import { useEditorStore } from "@/pages/dev-view/store"
 
 export function ProblemsPanel({ diagnostics }: { diagnostics: LspDiagnostic[] }) {
   const editor = useEditorStore((s) => s.editor)

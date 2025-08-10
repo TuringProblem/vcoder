@@ -1,6 +1,6 @@
 "use client"
 
-import type { AnalysisResponse, Language, Severity } from "@/components/codelearn-studio/internal/types/analysis"
+import type { AnalysisResponse, Language, Severity } from "@/types/analysis"
 import { t } from "@/lib/i18n"
 
 export function getTemplates(): Record<Language, string> {

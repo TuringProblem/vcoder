@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { LanguageList } from "@/data/types/languages.const"
+import { LanguageList } from "@/types/languages.const"
 
 export function LanguageSelect() {
   const navigate = useNavigate()

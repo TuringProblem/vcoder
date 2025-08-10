@@ -1,8 +1,8 @@
 "use client"
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useEditorStore } from "@/components/codelearn-studio/store"
-import { LanguageList } from "@/data/types/languages.const"
+import { useEditorStore } from "@/pages/dev-view/store"
+import { LanguageList } from "@/types/languages.const"
 
 export function LanguageSelector({ lockedLanguage }: { lockedLanguage: string }) {
   const language = useEditorStore((s) => s.language)

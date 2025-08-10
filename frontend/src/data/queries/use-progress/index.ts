@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import type { AccessCheckResponse, CompleteLessonRequest, LanguageKey, Progress } from "@/data/types/progress"
+import type { AccessCheckResponse, CompleteLessonRequest, LanguageKey, Progress } from "@/types/progress"
 
 const API_BASE = "http://localhost:8080"
 

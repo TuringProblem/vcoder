@@ -9,11 +9,11 @@ import { Wand2, Wrench, LocateFixed, ScanSearch } from "lucide-react"
 import { ModeSelect } from "@/components/ModeSelect"
 
 // Localized store and lib for the embedded editor
-import { useEditorStore } from "@/components/codelearn-studio/store"
-import { configureMonaco } from "@/components/codelearn-studio/lib/monaco-config"
-import { useLspDiagnosticsSync, useHoverSync } from "@/components/codelearn-studio/hooks/use-lsp"
-import { goToDefinition, findReferences, renameSymbolAtCursor } from "@/components/codelearn-studio/lib/lsp/typescript-lsp"
-import type { Language } from "@/components/codelearn-studio/internal/types/analysis"
+import { useEditorStore } from "@/pages/dev-view/store"
+import { configureMonaco } from "@/pages/dev-view/lib/monaco-config"
+import { useLspDiagnosticsSync, useHoverSync } from "@/pages/dev-view/hooks/use-lsp"
+import { goToDefinition, findReferences, renameSymbolAtCursor } from "@/pages/dev-view/lib/lsp/typescript-lsp"
+import type { Language } from "@/types/analysis"
 
 const MODEL_URIS: Record<Language, string> = {
   javascript: "inmemory://model/index.js",
@@ -73,9 +73,9 @@ export function MonacoEditor() {
     if (!editorRef.current) return
     if (mode === "vim") {
       // Lazy-load vim mode to reduce initial bundle
-      import("@/components/codelearn-studio/lib/vim-config").then(({ initVim }) => initVim(editorRef.current!))
+      import("@/pages/dev-view/lib/vim-config").then(({ initVim }) => initVim(editorRef.current!))
     } else {
-      import("@/components/codelearn-studio/lib/vim-config").then(({ disposeVim }) => disposeVim())
+              import("@/pages/dev-view/lib/vim-config").then(({ disposeVim }) => disposeVim())
     }
   }, [mode])
 

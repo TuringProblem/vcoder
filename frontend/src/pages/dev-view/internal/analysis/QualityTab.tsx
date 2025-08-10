@@ -1,6 +1,6 @@
 "use client"
 
-import type { AnalysisResponse } from "@/components/codelearn-studio/internal/types/analysis"
+import type { AnalysisResponse } from "@/types/analysis"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { BarChart2, CheckCircle, ListChecks } from "lucide-react"

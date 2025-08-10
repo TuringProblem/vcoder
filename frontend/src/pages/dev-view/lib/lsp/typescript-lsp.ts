@@ -1,7 +1,7 @@
 "use client"
 
 import type * as monacoType from "monaco-editor"
-import type { HoverInfo, LspDiagnostic } from "@/components/codelearn-studio/internal/types/lsp"
+import type { HoverInfo, LspDiagnostic } from "@/types/lsp"
 
 function toLspDiagnostics(markers: monacoType.editor.IMarkerData[]): LspDiagnostic[] {
   return markers.map((m) => ({

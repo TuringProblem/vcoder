@@ -1,11 +1,11 @@
 "use client"
 
-import type { AnalysisResponse } from "@/components/codelearn-studio/internal/types/analysis"
+import type { AnalysisResponse } from "@/types/analysis"
 import { Badge } from "@/components/ui/badge"
 import { Loader2, Info, OctagonAlert, TriangleAlert, Wand2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-import { ProblemsPanel } from "@/components/codelearn-studio/internal/analysis/problems-panel"
-import { useEditorStore } from "@/components/codelearn-studio/store"
+import { ProblemsPanel } from "@/pages/dev-view/internal/analysis/problems-panel"
+import { useEditorStore } from "@/pages/dev-view/store"
 
 export function SyntaxTab({
   data,

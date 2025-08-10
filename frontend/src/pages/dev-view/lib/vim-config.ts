@@ -1,7 +1,7 @@
 "use client"
 
 import type * as monacoType from "monaco-editor"
-import { useEditorStore } from "@/components/codelearn-studio/store"
+import { useEditorStore } from "@/pages/dev-view/store"
 
 let vimMode: any | null = null
 let statusNode: HTMLSpanElement | null = null

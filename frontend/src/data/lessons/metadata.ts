@@ -1,4 +1,4 @@
-import type { LanguageKey, SectionKey } from "../types/progress"
+import type { LanguageKey, SectionKey } from "@/types/progress"
 
 export type LessonMetadata = {
   language: LanguageKey

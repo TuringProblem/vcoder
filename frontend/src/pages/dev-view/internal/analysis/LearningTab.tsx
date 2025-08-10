@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import type { AnalysisResponse } from "@/components/codelearn-studio/internal/types/analysis";
+import type { AnalysisResponse } from "@/types/analysis";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { t } from "@/lib/i18n";
 import { getLessonPrompt } from "@/data/lessons/metadata";
-import { useEditorStore } from "@/components/codelearn-studio/store";
+import { useEditorStore } from "@/pages/dev-view/store";
 
 export function LearningTab({
   data,

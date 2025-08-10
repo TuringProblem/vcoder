@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { mockAnalyze } from "@/components/codelearn-studio/lib/api"
-import type { AnalysisResponse, Language } from "@/components/codelearn-studio/internal/types/analysis"
-import { useEditorStore } from "@/components/codelearn-studio/store"
+import { mockAnalyze } from "@/pages/dev-view/lib/api"
+import type { AnalysisResponse, Language } from "@/types/analysis"
+import { useEditorStore } from "@/pages/dev-view/store"
 
 function useDebounced<T>(value: T, delay = 300) {
   const [v, setV] = useState(value)

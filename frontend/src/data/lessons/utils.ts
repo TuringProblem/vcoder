@@ -1,4 +1,4 @@
-import type { LanguageKey, SectionKey } from "../types/progress"
+import type { LanguageKey, SectionKey } from "@/types/progress"
 
 export function parseLessonNumber(lesson: string): number {
   const match = lesson.match(/lesson-(\d+)/)

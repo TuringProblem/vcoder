@@ -1,15 +1,15 @@
 "use client"
 
 import { create } from "zustand"
-import type { Language } from "@/components/codelearn-studio/internal/types/analysis"
+import type { Language } from "@/types/analysis"
 import type * as monacoType from "monaco-editor"
-import { getTemplates } from "@/components/codelearn-studio/lib/api"
-import type { LspDiagnostic, HoverInfo } from "@/components/codelearn-studio/internal/types/lsp"
+import { getTemplates } from "@/pages/dev-view/lib/api"
+import type { LspDiagnostic, HoverInfo } from "@/types/lsp"
 
 type EditorMode = "default" | "vim"
 type ThemeMode = "dark" | "light"
 
-type HistoryItem = import("@/components/codelearn-studio/internal/types/analysis").AnalysisResponse
+type HistoryItem = import("@/types/analysis").AnalysisResponse
 
 type EditorStore = {
   language: Language

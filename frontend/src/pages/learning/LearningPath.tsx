@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useProgress } from "../../data/queries/use-progress"
-import type { LanguageKey } from "../../data/types/progress"
+import type { LanguageKey } from "@/types/progress"
 import { ChevronDown } from "lucide-react"
 import { LanguageSwitcher } from "@/components/lessons/LanguageSwitcher"
 import { t } from "@/lib/i18n"

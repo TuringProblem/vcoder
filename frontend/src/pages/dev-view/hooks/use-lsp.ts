@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect } from "react"
-import { useEditorStore } from "@/components/codelearn-studio/store"
-import { debounce } from "@/components/codelearn-studio/lib/lsp/lsp-config"
-import { collectDiagnosticsForModel, getHoverAt } from "@/components/codelearn-studio/lib/lsp/typescript-lsp"
+import { useEditorStore } from "@/pages/dev-view/store"
+import { debounce } from "@/pages/dev-view/lib/lsp/lsp-config"
+import { collectDiagnosticsForModel, getHoverAt } from "@/pages/dev-view/lib/lsp/typescript-lsp"
 
 function isJsTs(langId?: string) {
   return langId === "javascript" || langId === "typescript"

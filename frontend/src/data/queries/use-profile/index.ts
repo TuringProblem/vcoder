@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import type { Profile, UpdateProfileRequest, Badge } from "../../types/profile"
+import type { Profile, UpdateProfileRequest, Badge } from "@/types/profile/profile"
 
 const API_BASE = "http://localhost:8080"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import type { AnalysisResponse } from "@/components/codelearn-studio/internal/types/analysis"
+import type { AnalysisResponse } from "@/types/analysis"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export function PerformanceTab({
