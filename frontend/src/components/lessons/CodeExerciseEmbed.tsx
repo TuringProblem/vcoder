@@ -1,7 +1,7 @@
 import * as React from "react"
 import { LanguageSelector } from "@/components/codelearn-studio/LanguageSelectorLocked"
-const MonacoEditor = React.lazy(() => import("@/components/codelearn-studio/MonacoEditor").then(m => ({ default: m.MonacoEditor })))
-const AnalysisPanel = React.lazy(() => import("@/components/codelearn-studio/AnalysisPanel").then(m => ({ default: m.AnalysisPanel })))
+const MonacoEditor = React.lazy(() => import("@/components/codelearn-studio/internal/editor/MonacoEditorImpl").then(m => ({ default: m.MonacoEditor })))
+const AnalysisPanel = React.lazy(() => import("@/components/codelearn-studio/internal/analysis/AnalysisPanelImpl").then(m => ({ default: m.AnalysisPanel })))
 import { useEditorStore } from "@/components/codelearn-studio/store"
 
 export type LessonLanguage = "java" | "python" | "javascript" | "typescript" | "go"

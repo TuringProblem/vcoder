@@ -20,9 +20,9 @@ export function ModeSelect({
         <Select.Content className="z-50 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md">
           <Select.Viewport className="p-1">
             <Item
-               value="standard"
-               label="Default"
-               selected={mode === "standard"}
+              value="standard"
+              label="Default"
+              selected={mode === "standard"}
             />
             <Item value="vim" label="Vim" selected={mode === "vim"} />
           </Select.Viewport>

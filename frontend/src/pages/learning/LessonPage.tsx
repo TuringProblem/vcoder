@@ -6,6 +6,9 @@ import { LanguageBadge } from "@/components/lessons/LanguageBadge"
 import { NavigationControls } from "@/components/lessons/NavigationControls"
 import { useAccessCheck, useCompleteLesson } from "../../data/queries/use-progress"
 import type { LanguageKey, SectionKey } from "../../data/types/progress"
+import { useEditorStore } from "@/components/codelearn-studio/store"
+import { ModeSelect } from "@/components/ModeSelect"
+import { useAddBadge } from "../../data/queries/use-profile"
 
 export function LessonPage({ isPractice = false }: { isPractice?: boolean }) {
   const { language = "javascript", section = "variables", lesson = "lesson-1" } = useParams()
@@ -16,11 +19,41 @@ export function LessonPage({ isPractice = false }: { isPractice?: boolean }) {
     lesson,
   }, !isPractice)
   const completeMutation = useCompleteLesson()
+  const addBadgeMutation = useAddBadge()
+  const editorMode = useEditorStore((s) => s.editorMode)
+  const setEditorMode = useEditorStore((s) => s.setEditorMode)
 
   const context = React.useMemo(
     () => ({ language: language as any, lessonId: lesson, section, difficulty: "beginner" as const }),
     [language, section, lesson],
   )
+
+  const handleMarkComplete = async () => {
+    try {
+      // Mark lesson as complete
+      await completeMutation.mutateAsync({ 
+        language: language as LanguageKey, 
+        section: section as SectionKey, 
+        lesson: lesson as `lesson-${number}` 
+      })
+
+      // Award badge for completing the lesson
+      const badgeName = `${section.charAt(0).toUpperCase() + section.slice(1)} Explorer`
+      const badgeDescription = `Completed ${section} section in ${language}`
+      
+      await addBadgeMutation.mutateAsync({
+        id: `badge-${language}-${section}-${lesson}`,
+        name: badgeName,
+        description: badgeDescription,
+        icon: "🏆",
+        language: language as LanguageKey,
+        section: section as SectionKey,
+        earnedAt: new Date().toISOString(),
+      })
+    } catch (error) {
+      console.error("Failed to complete lesson:", error)
+    }
+  }
 
   return (
     <div className="p-4 space-y-4" data-testid="lesson-page">
@@ -43,12 +76,13 @@ export function LessonPage({ isPractice = false }: { isPractice?: boolean }) {
       </div>
 
       {!isPractice && (
-        <TheorySection>
-          <p>
-            This section explains the core concepts with examples. Adjust this copy to your curriculum and embed media as
-            needed.
-          </p>
-        </TheorySection>
+        <div className="flex items-center gap-2 p-4 border rounded-md bg-muted/30" data-testid="dev-view-mode-select">
+          <span className="text-sm font-medium">Editor Mode:</span>
+          <ModeSelect
+            mode={editorMode === "vim" ? "vim" : "standard"}
+            onChange={(m) => setEditorMode(m === "vim" ? "vim" : "default")}
+          />
+        </div>
       )}
 
       <CodeExerciseEmbed
@@ -71,11 +105,10 @@ export function LessonPage({ isPractice = false }: { isPractice?: boolean }) {
           <button
             className="px-3 py-1.5 rounded-md bg-black text-white"
             data-testid="mark-complete"
-            onClick={() =>
-              completeMutation.mutate({ language: language as LanguageKey, section: section as SectionKey, lesson: lesson as `lesson-${number}` })
-            }
+            onClick={handleMarkComplete}
+            disabled={completeMutation.isPending || addBadgeMutation.isPending}
           >
-            Mark Complete
+            {completeMutation.isPending || addBadgeMutation.isPending ? "Completing..." : "Mark Complete"}
           </button>
         </div>
       )}

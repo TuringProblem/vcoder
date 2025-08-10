@@ -8,10 +8,8 @@ import (
 	"backend/models"
 )
 
-// In-memory progress store keyed by language (no auth for now)
 var progressStore = map[string]models.Progress{}
 
-// CompleteLessonHandler marks a lesson as completed.
 func CompleteLessonHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)

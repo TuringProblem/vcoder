@@ -5,6 +5,8 @@ import { Dashboard } from "@/pages/dashboard/Dashboard"
 import { LearningPath } from "@/pages/learning/LearningPath"
 import { LessonPage } from "@/pages/learning/LessonPage"
 import { MainLayout } from "@/components/layout/MainLayout"
+import { LanguageSelect } from "@/pages/learning/LanguageSelect"
+import { ProfilePage } from "@/pages/dashboard/ProfilePage"
 
 const qc = new QueryClient()
 
@@ -16,6 +18,7 @@ export function AppRouter() {
           <Routes>
             <Route path="/" element={<Navigate to="/course/javascript" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/profile" element={<ProfilePage />} />
             <Route path="/course/:language" element={<LearningPath />} />
             <Route path="/course/:language/:section/:lesson" element={<LessonPage />} />
             <Route path="/code-practice/:language" element={<LessonPage isPractice />} />

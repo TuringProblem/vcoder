@@ -5,7 +5,6 @@ type AnalyzeRequest struct {
 	Code string `json:"code"`
 }
 
-// Feedback represents a feedback item returned by the analyzer.
 type Feedback struct {
 	ID       string `json:"id"`
 	Severity string `json:"severity"`
@@ -31,4 +30,34 @@ type AccessCheckResponse struct {
 	Allowed      bool   `json:"allowed"`
 	RedirectPath string `json:"redirectPath,omitempty"`
 	Reason       string `json:"reason,omitempty"`
+}
+
+type Profile struct {
+	ID        string  `json:"id"`
+	FirstName string  `json:"firstName"`
+	LastName  string  `json:"lastName"`
+	Email     string  `json:"email"`
+	Bio       string  `json:"bio"`
+	AvatarURL string  `json:"avatarUrl"`
+	Badges    []Badge `json:"badges"`
+	CreatedAt string  `json:"createdAt"`
+	UpdatedAt string  `json:"updatedAt"`
+}
+
+type Badge struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Icon        string `json:"icon"`
+	EarnedAt    string `json:"earnedAt"`
+	Language    string `json:"language"`
+	Section     string `json:"section"`
+}
+
+type UpdateProfileRequest struct {
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Email     string `json:"email"`
+	Bio       string `json:"bio"`
+	AvatarURL string `json:"avatarUrl"`
 }

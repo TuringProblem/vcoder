@@ -13,4 +13,7 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.Handle("/progress", withCORS(http.HandlerFunc(handlers.GetProgressHandler)))
 	mux.Handle("/complete", withCORS(http.HandlerFunc(handlers.CompleteLessonHandler)))
 	mux.Handle("/access-check", withCORS(http.HandlerFunc(handlers.CheckAccessHandler)))
+	mux.Handle("/profile", withCORS(http.HandlerFunc(handlers.GetProfileHandler)))
+	mux.Handle("/profile/update", withCORS(http.HandlerFunc(handlers.UpdateProfileHandler)))
+	mux.Handle("/profile/badge", withCORS(http.HandlerFunc(handlers.AddBadgeHandler)))
 }
