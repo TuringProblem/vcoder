@@ -2,6 +2,7 @@
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useEditorStore } from "@/components/codelearn-studio/store"
+import { LanguageList } from "@/data/types/languages.const"
 
 export function LanguageSelector({ lockedLanguage }: { lockedLanguage: string }) {
   const language = useEditorStore((s) => s.language)
@@ -12,18 +13,11 @@ export function LanguageSelector({ lockedLanguage }: { lockedLanguage: string })
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="javascript" disabled={lockedLanguage !== "javascript"}>
-            JavaScript
-          </SelectItem>
-          <SelectItem value="typescript" disabled={lockedLanguage !== "typescript"}>
-            TypeScript
-          </SelectItem>
-          <SelectItem value="python" disabled={lockedLanguage !== "python"}>
-            Python
-          </SelectItem>
-          <SelectItem value="java" disabled={lockedLanguage !== "java"}>
-            Java
-          </SelectItem>
+          {Object.entries(LanguageList).map(([key, label]) => (
+            <SelectItem key={key} value={key} disabled={lockedLanguage !== key}>
+              {label}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

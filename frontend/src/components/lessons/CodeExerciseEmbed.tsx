@@ -33,7 +33,8 @@ export function CodeExerciseEmbed({ context, initialCode, instructions }: CodeEx
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
       <div className="space-y-2">
-        <LanguageSelector lockedLanguage={context.language} />
+        {/* just cleaning this up for now... may use this somewhere else like the beginning*/}
+        {/*<LanguageSelector lockedLanguage={context.language} />*/}
         <React.Suspense fallback={<div className="p-4 text-sm text-muted-foreground">Loading editor…</div>}>
           <MonacoEditor />
         </React.Suspense>

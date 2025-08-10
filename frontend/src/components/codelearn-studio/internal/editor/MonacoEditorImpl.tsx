@@ -6,6 +6,7 @@ import type * as monacoType from "monaco-editor"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Wand2, Wrench, LocateFixed, ScanSearch } from "lucide-react"
+import { ModeSelect } from "@/components/ModeSelect"
 
 // Localized store and lib for the embedded editor
 import { useEditorStore } from "@/components/codelearn-studio/store"
@@ -159,6 +160,12 @@ export function MonacoEditor() {
       >
         <ScanSearch className="h-4 w-4" />
       </Button>
+      <div className="ml-2">
+        <ModeSelect
+          mode={mode === "vim" ? "vim" : "standard"}
+          onChange={(m) => useEditorStore.getState().setEditorMode(m === "vim" ? "vim" : "default")}
+        />
+      </div>
     </div>
   )
 

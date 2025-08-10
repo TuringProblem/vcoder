@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useProgress } from "../../data/queries/use-progress"
 import type { LanguageKey } from "../../data/types/progress"
+import { ChevronDown } from "lucide-react"
+import { LanguageSwitcher } from "@/components/lessons/LanguageSwitcher"
 
 
 
@@ -61,7 +63,10 @@ export function LearningPath() {
 
   return (
     <div className="p-4 space-y-4">
-      {languageListDiplay(language!)}
+      <div className="flex items-center justify-between">
+        {languageListDiplay(language!)}
+        <LanguageSwitcher value={language!} onChange={(v) => navigate(`/course/${v}`)} />
+      </div>
       {isLoading ? (
         <div className="text-sm text-muted-foreground">Loading progress…</div>
       ) : (
@@ -72,6 +77,7 @@ export function LearningPath() {
               <AccordionItem key={s.id} value={s.id} className={unlocked ? "" : "opacity-60"}>
                 <AccordionTrigger>
                   <div className="flex items-center gap-2">
+                    <ChevronDown className="h-4 w-4 opacity-70" />
                     <span>{s.title}</span>
                     {!unlocked && <Badge variant="secondary">Locked</Badge>}
                   </div>

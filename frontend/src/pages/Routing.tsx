@@ -15,7 +15,7 @@ export function AppRouter() {
       <BrowserRouter>
         <MainLayout>
           <Routes>
-            <Route path="/" element={<LanguageSelect />} />
+            <Route path="/" element={<Navigate to="/course/javascript" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/course/:language" element={<LearningPath />} />
             <Route path="/course/:language/:section/:lesson" element={<LessonPage />} />

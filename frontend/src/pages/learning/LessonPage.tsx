@@ -39,7 +39,7 @@ export function LessonPage({ isPractice = false }: { isPractice?: boolean }) {
       <>
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">{section} — {lesson}</h1>
-        <LanguageBadge language={language} />
+        {/*<LanguageBadge language={language} />*/}
       </div>
 
       {!isPractice && (
