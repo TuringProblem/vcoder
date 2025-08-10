@@ -5,6 +5,7 @@ import { Dashboard } from "@/pages/dashboard/Dashboard"
 import { LearningPath } from "@/pages/learning/LearningPath"
 import { LessonPage } from "@/pages/learning/LessonPage"
 import { MainLayout } from "@/components/layout/MainLayout"
+import { LanguageSelect } from "@/pages/learning/LanguageSelect"
 
 const qc = new QueryClient()
 
@@ -14,7 +15,7 @@ export function AppRouter() {
       <BrowserRouter>
         <MainLayout>
           <Routes>
-            <Route path="/" element={<Navigate to="/course/javascript" replace />} />
+            <Route path="/" element={<LanguageSelect />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/course/:language" element={<LearningPath />} />
             <Route path="/course/:language/:section/:lesson" element={<LessonPage />} />

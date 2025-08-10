@@ -17,7 +17,7 @@ export type CodeExerciseProps = {
   context: LessonContext
   initialCode?: string
   expectedOutput?: string
-  instructions: string
+  instructions?: string
 }
 
 export function CodeExerciseEmbed({ context, initialCode, instructions }: CodeExerciseProps) {

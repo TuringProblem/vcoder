@@ -1,0 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export function Sidebar({ feedback }) {
+    return (_jsxs("aside", { className: "w-96 border-l h-full overflow-auto bg-white/50", children: [_jsx("div", { className: "p-4 border-b font-semibold", children: "Analysis Feedback" }), _jsxs("ul", { className: "p-2 space-y-2", children: [feedback.length === 0 && (_jsx("li", { className: "text-sm text-muted-foreground p-2", children: "No feedback yet. Run Analyze." })), feedback.map((f) => (_jsxs("li", { className: "p-2 rounded-md border", children: [_jsx("div", { className: "text-xs uppercase tracking-wide text-gray-500", children: f.severity }), _jsx("div", { className: "text-sm", children: f.message }), _jsxs("div", { className: "text-xs text-gray-500", children: ["Line ", f.line, ", Col ", f.column] })] }, f.id)))] })] }));
+}

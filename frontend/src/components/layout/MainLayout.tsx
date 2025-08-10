@@ -6,7 +6,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
       <header className="border-b px-4 h-12 flex items-center gap-4">
         <Link to="/" className="font-semibold">CodeLearn</Link>
         <nav className="ml-auto flex items-center gap-3 text-sm">
-          <Link className="underline" to="/course/javascript">Courses</Link>
+          <Link className="underline" to="/">Courses</Link>
           <Link className="underline" to="/dashboard">Dashboard</Link>
         </nav>
       </header>
