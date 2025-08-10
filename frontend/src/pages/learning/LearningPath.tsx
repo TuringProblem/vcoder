@@ -6,21 +6,20 @@ import { useProgress } from "../../data/queries/use-progress"
 import type { LanguageKey } from "../../data/types/progress"
 import { ChevronDown } from "lucide-react"
 import { LanguageSwitcher } from "@/components/lessons/LanguageSwitcher"
-
-
+import { t } from "@/lib/i18n"
 
 // TODO: Think of a better way to organize the sections
 const sections = [
-  { id: "variables", title: "Variables" },
-  { id: "conditionals", title: "Conditionals" },
-  { id: "loops", title: "Loops" },
-  { id: "functions", title: "Functions" },
+  { id: "variables", title: t("lessons.sections.variables") },
+  { id: "conditionals", title: t("lessons.sections.conditionals") },
+  { id: "loops", title: t("lessons.sections.loops") },
+  { id: "functions", title: t("lessons.sections.functions") },
 ]
 
 const languageListDiplay = (language: string) => {
   return (
     <div>
-      <h1 className="text-xl font-semibold">Course: {language}</h1>
+      <h1 className="text-xl font-semibold">{t("lessons.course", { language })}</h1>
     </div>
   )
 }
@@ -52,10 +51,10 @@ export function LearningPath() {
       <div key={key} className="flex items-center justify-between py-1">
         <div className="flex items-center gap-2">
           <span className="text-sm">Lesson {n}</span>
-          {completed ? <Badge>Completed</Badge> : locked ? <Badge variant="secondary">Locked</Badge> : <Badge variant="outline">Current</Badge>}
+          {completed ? <Badge>{t("common.completed")}</Badge> : locked ? <Badge variant="secondary">{t("common.locked")}</Badge> : <Badge variant="outline">{t("common.current")}</Badge>}
         </div>
         <Button size="sm" variant={completed ? "outline" : "default"} disabled={!canEnter} onClick={() => navigate(`/course/${language}/${sectionId}/lesson-${n}`)}>
-          {completed ? "Review" : "Start"}
+          {completed ? t("common.review") : t("common.start")}
         </Button>
       </div>
     )
@@ -68,7 +67,7 @@ export function LearningPath() {
         <LanguageSwitcher value={language!} onChange={(v) => navigate(`/course/${v}`)} />
       </div>
       {isLoading ? (
-        <div className="text-sm text-muted-foreground">Loading progress…</div>
+        <div className="text-sm text-muted-foreground">{t("lessons.loadingProgress")}</div>
       ) : (
         <Accordion type="single" collapsible className="space-y-2" data-testid="course-accordion">
           {sections.map((s) => {
@@ -79,7 +78,7 @@ export function LearningPath() {
                   <div className="flex items-center gap-2">
                     <ChevronDown className="h-4 w-4 opacity-70" />
                     <span>{s.title}</span>
-                    {!unlocked && <Badge variant="secondary">Locked</Badge>}
+                    {!unlocked && <Badge variant="secondary">{t("common.locked")}</Badge>}
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>

@@ -1,0 +1,117 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "error": "Error",
+    "upToDate": "Up to date",
+    "analyzing": "Analyzing…",
+    "errorAnalyzing": "Error analyzing",
+    "completed": "Completed",
+    "locked": "Locked",
+    "current": "Current",
+    "review": "Review",
+    "start": "Start",
+    "goToUnlockedLesson": "Go to unlocked lesson"
+  },
+  "navigation": {
+    "courses": "Courses",
+    "editorMode": "Editor Mode:",
+    "lspOn": "LSP: On"
+  },
+  "analysis": {
+    "realTimeAnalysis": "Real-time Analysis",
+    "tabs": {
+      "syntax": "Syntax",
+      "quality": "Quality",
+      "execution": "Execution",
+      "learning": "Learning",
+      "performance": "Performance"
+    },
+    "learning": {
+      "preparingTopics": "Preparing learning topics…",
+      "promptPlaceholder": "Ask a question about this lesson..."
+    }
+  },
+  "lessons": {
+    "checkingAccess": "Checking access…",
+    "lessonLocked": "Locked",
+    "course": "Course: {language}",
+    "loadingProgress": "Loading progress…",
+    "sections": {
+      "variables": "Variables",
+      "conditionals": "Conditionals",
+      "loops": "Loops",
+      "functions": "Functions"
+    }
+  },
+  "editor": {
+    "loadingEditor": "Loading editor…",
+    "loadingAnalysis": "Loading analysis…"
+  },
+  "learning": {
+    "topics": {
+      "forOfLoops": {
+        "title": "for…of loops",
+        "explanation": "You can iterate arrays and iterables with for…of, which is often clearer than index-based loops.",
+        "example": "const arr = [1,2,3]\nfor (const n of arr) {\n  console.log(n)\n}",
+        "link": "MDN: for...of"
+      },
+      "interfacesVsTypes": {
+        "title": "Interfaces vs Types",
+        "explanation": "Interfaces and type aliases are similar. Interfaces are extendable and great for object shapes; type aliases can compose unions/intersections.",
+        "example": "interface User { id: number; name: string }\ntype Id = number | string\n",
+        "link": "TS Handbook: Interfaces"
+      },
+      "generics": {
+        "title": "Generics",
+        "explanation": "Generics let you write reusable components with type parameters.",
+        "example": "function identity<T>(arg: T): T { return arg }\nconst n = identity<number>(42)",
+        "link": "TS Handbook: Generics"
+      },
+      "forEachLoops": {
+        "title": "for-each style loops",
+        "explanation": "In Python, you can iterate directly over items instead of indices when possible.",
+        "example": "names = [\"Ana\", \"Bo\"]\nfor name in names:\n    print(name)",
+        "link": "Python for loops"
+      },
+      "enhancedForEach": {
+        "title": "Enhanced for-each loop",
+        "explanation": "Use the enhanced for loop for iterating collections/arrays when you don't need the index.",
+        "example": "for (String name : names) {\n    System.out.println(name);\n}",
+        "link": "Oracle: Enhanced for"
+      }
+    }
+  },
+  "quality": {
+    "suggestions": {
+      "simplifyLoops": {
+        "title": "Consider simplifying loops",
+        "detail": "Too many loops can indicate complex logic. Extract helper functions.",
+        "why": "Lower cyclomatic complexity improves readability and testability."
+      },
+      "preferLetConst": {
+        "title": "Prefer let/const over var",
+        "detail": "Use block-scoped declarations.",
+        "why": "Avoids hoisting pitfalls and improves maintainability."
+      },
+      "addTypeAnnotations": {
+        "title": "Add explicit type annotations",
+        "detail": "Annotate function parameters and return types for clarity.",
+        "why": "Improves readability and helps the compiler catch errors."
+      }
+    }
+  },
+  "performance": {
+    "suggestions": {
+      "useEarlyExits": {
+        "title": "Use early exits",
+        "detail": "Break/return early when goal is reached to reduce iterations."
+      }
+    },
+    "hotspots": {
+      "nestedLoops": {
+        "title": "Nested loops",
+        "detail": "Consider reducing nesting."
+      }
+    }
+  }
+}

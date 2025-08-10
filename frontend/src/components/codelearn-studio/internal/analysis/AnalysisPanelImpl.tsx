@@ -11,8 +11,17 @@ import { QualityTab } from "@/components/codelearn-studio/internal/analysis/Qual
 import { LearningTab } from "@/components/codelearn-studio/internal/analysis/LearningTab"
 import { ExecutionTab } from "@/components/codelearn-studio/internal/analysis/ExecutionTab"
 import { PerformanceTab } from "@/components/codelearn-studio/internal/analysis/PerformanceTab"
+import { t } from "@/lib/i18n"
 
-export function AnalysisPanel() {
+export function AnalysisPanel({
+  lessonContext,
+}: {
+  lessonContext?: {
+    language: string;
+    section: string;
+    lesson: string;
+  };
+}) {
   const language = useEditorStore((s) => s.language)
   const code = useEditorStore((s) => s.codeByLanguage[language] || "")
   const { data, isLoading, error } = useCodeAnalysis(language, code)
@@ -25,25 +34,25 @@ export function AnalysisPanel() {
       <div className="flex items-center justify-between p-3 border-b">
         <div className="flex items-center gap-2">
           <div className={`h-2.5 w-2.5 rounded-full ${gradeColor}`} aria-hidden="true" />
-          <span className="text-sm font-medium">Real-time Analysis</span>
+          <span className="text-sm font-medium">{t("analysis.realTimeAnalysis")}</span>
           <Separator orientation="vertical" className="mx-2 h-5" />
           <Badge variant="outline" className="text-xs">
             {language}
           </Badge>
         </div>
         <div className="text-xs text-muted-foreground">
-          {isLoading ? "Analyzing…" : error ? "Error analyzing" : "Up to date"}
+          {isLoading ? t("analysis.analyzing") : error ? t("analysis.errorAnalyzing") : t("analysis.upToDate")}
         </div>
       </div>
       <div className="p-0 md:p-3 overflow-hidden flex-1 flex flex-col">
         <Tabs defaultValue="syntax" className="flex-1 flex flex-col">
           <div className="px-3 pt-3">
             <TabsList className="grid w-full grid-cols-5">
-              <TabsTrigger value="syntax">Syntax</TabsTrigger>
-              <TabsTrigger value="quality">Quality</TabsTrigger>
-              <TabsTrigger value="execution">Execution</TabsTrigger>
-              <TabsTrigger value="learning">Learning</TabsTrigger>
-              <TabsTrigger value="performance">Performance</TabsTrigger>
+              <TabsTrigger value="syntax">{t("analysis.tabs.syntax")}</TabsTrigger>
+              <TabsTrigger value="quality">{t("analysis.tabs.quality")}</TabsTrigger>
+              <TabsTrigger value="execution">{t("analysis.tabs.execution")}</TabsTrigger>
+              <TabsTrigger value="learning">{t("analysis.tabs.learning")}</TabsTrigger>
+              <TabsTrigger value="performance">{t("analysis.tabs.performance")}</TabsTrigger>
             </TabsList>
           </div>
           <div className="flex-1 overflow-auto">
@@ -57,7 +66,7 @@ export function AnalysisPanel() {
               <ExecutionTab data={data} isLoading={isLoading} />
             </TabsContent>
             <TabsContent value="learning" className="p-3">
-              <LearningTab data={data} isLoading={isLoading} />
+              <LearningTab data={data} isLoading={isLoading} lessonContext={lessonContext} />
             </TabsContent>
             <TabsContent value="performance" className="p-3">
               <PerformanceTab data={data} isLoading={isLoading} />

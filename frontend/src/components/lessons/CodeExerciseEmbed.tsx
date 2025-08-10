@@ -3,6 +3,7 @@ import { LanguageSelector } from "@/components/codelearn-studio/LanguageSelector
 const MonacoEditor = React.lazy(() => import("@/components/codelearn-studio/internal/editor/MonacoEditorImpl").then(m => ({ default: m.MonacoEditor })))
 const AnalysisPanel = React.lazy(() => import("@/components/codelearn-studio/internal/analysis/AnalysisPanelImpl").then(m => ({ default: m.AnalysisPanel })))
 import { useEditorStore } from "@/components/codelearn-studio/store"
+import { t } from "@/lib/i18n"
 
 export type LessonLanguage = "java" | "python" | "javascript" | "typescript" | "go"
 
@@ -30,18 +31,25 @@ export function CodeExerciseEmbed({ context, initialCode, instructions }: CodeEx
     if (initialCode) setCodeForLanguage(lang, initialCode)
   }, [context.language, initialCode, setLanguage, setCodeForLanguage])
 
+  // Create lesson context for the analysis panel
+  const lessonContext = {
+    language: context.language,
+    section: context.section,
+    lesson: context.lessonId
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3" data-testid="code-exercise-embed">
       <div className="space-y-2">
         {/* just cleaning this up for now... may use this somewhere else like the beginning*/}
         {/*<LanguageSelector lockedLanguage={context.language} />*/}
-        <React.Suspense fallback={<div className="p-4 text-sm text-muted-foreground">Loading editor…</div>}>
+        <React.Suspense fallback={<div className="p-4 text-sm text-muted-foreground">{t("editor.loadingEditor")}</div>}>
           <MonacoEditor />
         </React.Suspense>
       </div>
       <div>
-        <React.Suspense fallback={<div className="p-4 text-sm text-muted-foreground">Loading analysis…</div>}>
-          <AnalysisPanel />
+        <React.Suspense fallback={<div className="p-4 text-sm text-muted-foreground">{t("editor.loadingAnalysis")}</div>}>
+          <AnalysisPanel lessonContext={lessonContext} />
         </React.Suspense>
         <div className="mt-3 text-sm text-muted-foreground">
           {instructions}

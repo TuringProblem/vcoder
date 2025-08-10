@@ -1,6 +1,7 @@
 "use client"
 
 import type { AnalysisResponse, Language, Severity } from "@/components/codelearn-studio/internal/types/analysis"
+import { t } from "@/lib/i18n"
 
 export function getTemplates(): Record<Language, string> {
   return {
@@ -148,24 +149,24 @@ function qualityChecks(language: Language, code: string) {
   const suggestions: { title: string; detail: string; why?: string }[] = []
   if (loops > 3) {
     suggestions.push({
-      title: "Consider simplifying loops",
-      detail: "Too many loops can indicate complex logic. Extract helper functions.",
-      why: "Lower cyclomatic complexity improves readability and testability.",
+      title: t("quality.suggestions.simplifyLoops.title"),
+      detail: t("quality.suggestions.simplifyLoops.detail"),
+      why: t("quality.suggestions.simplifyLoops.why"),
     })
   }
   if (language === "javascript" && /var\s+/.test(code)) {
     suggestions.push({
-      title: "Prefer let/const over var",
-      detail: "Use block-scoped declarations.",
-      why: "Avoids hoisting pitfalls and improves maintainability.",
+      title: t("quality.suggestions.preferLetConst.title"),
+      detail: t("quality.suggestions.preferLetConst.detail"),
+      why: t("quality.suggestions.preferLetConst.why"),
     })
     score -= 5
   }
   if (language === "typescript" && !/:/.test(code.split("\n").slice(0, 50).join("\n"))) {
     suggestions.push({
-      title: "Add explicit type annotations",
-      detail: "Annotate function parameters and return types for clarity.",
-      why: "Improves readability and helps the compiler catch errors.",
+      title: t("quality.suggestions.addTypeAnnotations.title"),
+      detail: t("quality.suggestions.addTypeAnnotations.detail"),
+      why: t("quality.suggestions.addTypeAnnotations.why"),
     })
     score -= 3
   }
@@ -206,12 +207,12 @@ function learningContent(language: Language, code: string) {
 
   if (language === "javascript" && /for\s+of/.test(code) === false && /for\s*\(/.test(code)) {
     topics.push({
-      title: "for…of loops",
-      explanation: "You can iterate arrays and iterables with for…of, which is often clearer than index-based loops.",
-      example: `const arr = [1,2,3]\nfor (const n of arr) {\n  console.log(n)\n}`,
+      title: t("learning.topics.forOfLoops.title"),
+      explanation: t("learning.topics.forOfLoops.explanation"),
+      example: t("learning.topics.forOfLoops.example"),
       links: [
         {
-          label: "MDN: for...of",
+          label: t("learning.topics.forOfLoops.link"),
           url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of",
         },
       ],
@@ -220,39 +221,38 @@ function learningContent(language: Language, code: string) {
 
   if (language === "typescript") {
     topics.push({
-      title: "Interfaces vs Types",
-      explanation:
-        "Interfaces and type aliases are similar. Interfaces are extendable and great for object shapes; type aliases can compose unions/intersections.",
-      example: `interface User { id: number; name: string }\ntype Id = number | string\n`,
+      title: t("learning.topics.interfacesVsTypes.title"),
+      explanation: t("learning.topics.interfacesVsTypes.explanation"),
+      example: t("learning.topics.interfacesVsTypes.example"),
       links: [
-        { label: "TS Handbook: Interfaces", url: "https://www.typescriptlang.org/docs/handbook/interfaces.html" },
+        { label: t("learning.topics.interfacesVsTypes.link"), url: "https://www.typescriptlang.org/docs/handbook/interfaces.html" },
       ],
     })
     topics.push({
-      title: "Generics",
-      explanation: "Generics let you write reusable components with type parameters.",
-      example: `function identity<T>(arg: T): T { return arg }\nconst n = identity<number>(42)`,
-      links: [{ label: "TS Handbook: Generics", url: "https://www.typescriptlang.org/docs/handbook/2/generics.html" }],
+      title: t("learning.topics.generics.title"),
+      explanation: t("learning.topics.generics.explanation"),
+      example: t("learning.topics.generics.example"),
+      links: [{ label: t("learning.topics.generics.link"), url: "https://www.typescriptlang.org/docs/handbook/2/generics.html" }],
     })
   }
 
   if (language === "python" && /range\(/.test(code)) {
     topics.push({
-      title: "for-each style loops",
-      explanation: "In Python, you can iterate directly over items instead of indices when possible.",
-      example: `names = ["Ana", "Bo"]\nfor name in names:\n    print(name)`,
-      links: [{ label: "Python for loops", url: "https://docs.python.org/3/tutorial/controlflow.html#for-statements" }],
+      title: t("learning.topics.forEachLoops.title"),
+      explanation: t("learning.topics.forEachLoops.explanation"),
+      example: t("learning.topics.forEachLoops.example"),
+      links: [{ label: t("learning.topics.forEachLoops.link"), url: "https://docs.python.org/3/tutorial/controlflow.html#for-statements" }],
     })
   }
 
   if (language === "java" && /for\s*\(/.test(code) && !/:\s*\)/.test(code)) {
     topics.push({
-      title: "Enhanced for-each loop",
-      explanation: "Use the enhanced for loop for iterating collections/arrays when you don't need the index.",
-      example: `for (String name : names) {\n    System.out.println(name);\n}`,
+      title: t("learning.topics.enhancedForEach.title"),
+      explanation: t("learning.topics.enhancedForEach.explanation"),
+      example: t("learning.topics.enhancedForEach.example"),
       links: [
         {
-          label: "Oracle: Enhanced for",
+          label: t("learning.topics.enhancedForEach.link"),
           url: "https://docs.oracle.com/javase/8/docs/technotes/guides/language/foreach.html",
         },
       ],
@@ -268,13 +268,13 @@ function performanceAnalysis(language: Language, code: string) {
   const bigO: "O(1)" | "O(n)" | "O(n^2)" = nestedLoops > 0 ? "O(n^2)" : loops > 0 ? "O(n)" : "O(1)"
   const hotspots: { title: string; line: number; detail: string }[] = []
   if (nestedLoops > 0) {
-    hotspots.push({ title: "Nested loops", line: 1, detail: "Consider reducing nesting." })
+    hotspots.push({ title: t("performance.hotspots.nestedLoops.title"), line: 1, detail: t("performance.hotspots.nestedLoops.detail") })
   }
   const suggestions: { title: string; detail: string }[] = []
   if (bigO !== "O(1)") {
     suggestions.push({
-      title: "Use early exits",
-      detail: "Break/return early when goal is reached to reduce iterations.",
+      title: t("performance.suggestions.useEarlyExits.title"),
+      detail: t("performance.suggestions.useEarlyExits.detail"),
     })
   }
   return { bigO, hotspots, suggestions }
