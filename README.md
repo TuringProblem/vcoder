@@ -1,5 +1,8 @@
 # Monorepo: Go Backend + Vite React Frontend
 
+[![Go](https://github.com/TuringProblem/vcoder/actions/workflows/go.yml/badge.svg)](https://github.com/TuringProblem/vcoder/actions/workflows/go.yml)
+
+
 This repository contains a simple monolithic setup:
 
 - Go backend exposing a single `/analyze` POST endpoint on `localhost:8080` that returns hardcoded feedback.
