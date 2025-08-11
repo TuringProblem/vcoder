@@ -1,7 +1,6 @@
 # Monorepo: Go Backend + Vite React Frontend
 
 [![Go](https://github.com/TuringProblem/vcoder/actions/workflows/go.yml/badge.svg)](https://github.com/TuringProblem/vcoder/actions/workflows/go.yml)
-
 [![Lint Code Base](https://github.com/TuringProblem/vcoder/actions/workflows/super-linter.yml/badge.svg)](https://github.com/TuringProblem/vcoder/actions/workflows/super-linter.yml)
 
 This repository contains a simple monolithic setup:
@@ -49,7 +48,7 @@ The Analyze button will send the current editor contents to `http://localhost:80
 
 ## Project Structure
 
-```
+```text
 backend/
   handlers/
   models/
