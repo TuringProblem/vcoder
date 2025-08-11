@@ -8,6 +8,97 @@ import { t } from "@/lib/i18n";
 import { getLessonPrompt } from "@/data/lessons/metadata";
 import { useEditorStore } from "@/pages/dev-view/store";
 
+type QuestionInputProps = {
+  question: string
+  isAsking: boolean
+  onQuestionChange: (value: string) => void
+  onAskQuestion: () => void
+}
+
+function QuestionInput({ question, isAsking, onQuestionChange, onAskQuestion }: QuestionInputProps) {
+  return (
+    <div className="space-y-2">
+      <Input
+        placeholder={t("analysis.learning.promptPlaceholder")}
+        value={question}
+        onChange={(e) => onQuestionChange(e.target.value)}
+        onKeyPress={(e) => e.key === "Enter" && onAskQuestion()}
+        disabled={isAsking}
+      />
+      <Button 
+        onClick={onAskQuestion} 
+        disabled={!question.trim() || isAsking}
+        size="sm"
+      >
+        {isAsking ? t("common.loading") : "Ask Question"}
+      </Button>
+    </div>
+  )
+}
+
+type LearningTopicProps = {
+  topic: {
+    title: string
+    explanation: string
+    example?: string
+    links?: { label: string; url: string }[]
+  }
+  index: number
+}
+
+function LearningTopic({ topic, index }: LearningTopicProps) {
+  return (
+    <Card key={index}>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">{topic.title}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2 text-sm">
+        <div>{topic.explanation}</div>
+        {topic.example && (
+          <pre className="bg-muted p-2 rounded text-xs overflow-auto">
+            <code>{topic.example}</code>
+          </pre>
+        )}
+        {topic.links && topic.links.length > 0 && (
+          <ul className="list-disc list-inside text-muted-foreground">
+            {topic.links.map((link, linkIndex) => (
+              <li key={linkIndex}>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
+
+type LearningTopicsListProps = {
+  topics: {
+    title: string
+    explanation: string
+    example?: string
+    links?: { label: string; url: string }[]
+  }[]
+}
+
+function LearningTopicsList({ topics }: LearningTopicsListProps) {
+  return (
+    <>
+      {topics.map((topic, index) => (
+        <LearningTopic key={index} topic={topic} index={index} />
+      ))}
+    </>
+  )
+}
+
 export function LearningTab({
   data,
   isLoading,
@@ -45,66 +136,28 @@ export function LearningTab({
     }, 2000);
   };
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="text-sm text-muted-foreground">
         {t("analysis.learning.preparingTopics")}
       </div>
     );
+  }
+  
   if (!data) return null;
 
   return (
     <div className="space-y-3">
       <CardContent className="space-y-2 text-sm">
         <CardTitle className="text-base">{lessonPrompt}</CardTitle>
-        <div className="space-y-2">
-          <Input
-            placeholder={t("analysis.learning.promptPlaceholder")}
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleAskQuestion()}
-            disabled={isAsking}
-          />
-          <Button 
-            onClick={handleAskQuestion} 
-            disabled={!question.trim() || isAsking}
-            size="sm"
-          >
-            {isAsking ? t("common.loading") : "Ask Question"}
-          </Button>
-        </div>
+        <QuestionInput
+          question={question}
+          isAsking={isAsking}
+          onQuestionChange={setQuestion}
+          onAskQuestion={handleAskQuestion}
+        />
       </CardContent>
-      {data.learning.topics.map((t, i) => (
-        <Card key={i}>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">{t.title}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            <div>{t.explanation}</div>
-            {t.example && (
-              <pre className="bg-muted p-2 rounded text-xs overflow-auto">
-                <code>{t.example}</code>
-              </pre>
-            )}
-            {t.links && t.links.length > 0 && (
-              <ul className="list-disc list-inside text-muted-foreground">
-                {t.links.map((l, j) => (
-                  <li key={j}>
-                    <a
-                      href={l.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="underline"
-                    >
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </CardContent>
-        </Card>
-      ))}
+      <LearningTopicsList topics={data.learning.topics} />
     </div>
   );
 }
