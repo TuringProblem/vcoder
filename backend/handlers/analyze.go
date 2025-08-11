@@ -9,7 +9,6 @@ import (
 	"backend/services"
 )
 
-// AnalyzeHandler handles POST /analyze to analyze provided code.
 func AnalyzeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
