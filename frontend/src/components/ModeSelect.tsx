@@ -12,7 +12,7 @@ export function ModeSelect({
 }) {
   return (
     <Select.Root value={mode} onValueChange={(v) => onChange(v as EditorMode)}>
-      <Select.Trigger className="inline-flex items-center gap-2 px-2.5 py-1.5 text-m rounded-md border bg-background text-foreground shadow-sm hover:bg-accent/30">
+      <Select.Trigger className="inline-flex items-center gap-2 px-2.5 py-1.5 text-m rounded-md border bg-background text-foreground shadow-sm hover:bg-accent/70">
         <Select.Value />
         <ChevronDown className="h-4 w-4 opacity-70" />
       </Select.Trigger>

@@ -1,26 +1,26 @@
-import { Link } from "react-router-dom"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Link } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { User } from "lucide-react"
-import { useProfile } from "../../data/queries/use-profile"
+} from "@/components/ui/dropdown-menu";
+import { User } from "lucide-react";
+import { useProfile } from "../../data/queries/use-profile";
 
 export function UserAvatarMenu() {
-  const { data: profile } = useProfile()
-  
+  const { data: profile } = useProfile();
+
   const getInitials = () => {
     if (profile?.firstName && profile?.lastName) {
-      return `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase()
+      return `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase();
     }
     if (profile?.firstName) {
-      return profile.firstName[0].toUpperCase()
+      return profile.firstName[0].toUpperCase();
     }
-    return "U"
-  }
+    return "U";
+  };
 
   return (
     <DropdownMenu>
@@ -45,5 +45,5 @@ export function UserAvatarMenu() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-} 
+  );
+}
