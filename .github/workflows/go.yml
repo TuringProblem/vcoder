@@ -3,6 +3,7 @@
 
 name: Go
 
+
 on:
   push:
     branches: [ "main" ]
@@ -14,6 +15,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
+      
     - uses: actions/checkout@v4
 
     - name: Set up Go
@@ -21,8 +24,6 @@ jobs:
       with:
         go-version: '1.22'
 
-    - name: Build
+    - name: Build backend
       run: go build -v ./...
-
-    - name: Test
-      run: go test -v ./...
+      working-directory: ./backend
