@@ -1,72 +1,76 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useEditorStore } from "@/pages/dev-view/store"
-import { debounce } from "@/pages/dev-view/lib/lsp/lsp-config"
-import { collectDiagnosticsForModel, getHoverAt } from "@/pages/dev-view/lib/lsp/typescript-lsp"
+import { useEffect } from "react";
+import { useEditorStore } from "@/pages/dev-view/store";
+import { debounce } from "@/pages/dev-view/lib/lsp/lsp-config";
+import {
+  collectDiagnosticsForModel,
+  getHoverAt,
+} from "@/pages/dev-view/lib/lsp/typescript-lsp";
 
 function isJsTs(langId?: string) {
-  return langId === "javascript" || langId === "typescript"
+  return langId === "javascript" || langId === "typescript";
 }
 
 export function useLspDiagnosticsSync() {
-  const setDiagnostics = useEditorStore((s) => s.setLspDiagnostics)
-  const editor = useEditorStore((s) => s.editor)
+  const setDiagnostics = useEditorStore((s) => s.setLspDiagnostics);
+  const editor = useEditorStore((s) => s.editor);
 
   useEffect(() => {
-    const monaco = (window as any).monaco as typeof import("monaco-editor")
-    if (!monaco || !editor) return
+    const monaco = (window as any).monaco as typeof import("monaco-editor");
+    if (!monaco || !editor) return;
     const update = debounce(() => {
-      const model = editor.getModel()
+      const model = editor.getModel();
       if (!model || !isJsTs(model.getLanguageId())) {
-        setDiagnostics([])
-        return
+        setDiagnostics([]);
+        return;
       }
-      const d = collectDiagnosticsForModel(monaco, model)
-      setDiagnostics(d)
-    }, 500)
+      const d = collectDiagnosticsForModel(monaco, model);
+      setDiagnostics(d);
+    }, 500);
 
-    const sub = monaco.editor.onDidChangeMarkers(update)
-    const d1 = editor.onDidChangeModel(update)
-    update()
+    const sub = monaco.editor.onDidChangeMarkers(update);
+    const d1 = editor.onDidChangeModel(update);
+    update();
     return () => {
-      sub.dispose()
-      d1.dispose()
-    }
-  }, [setDiagnostics, editor])
+      sub.dispose();
+      d1.dispose();
+    };
+  }, [setDiagnostics, editor]);
 }
 
 export function useHoverSync() {
-  const setHover = useEditorStore((s) => s.setLspHover)
-  const editor = useEditorStore((s) => s.editor)
+  const setHover = useEditorStore((s) => s.setLspHover);
+  const editor = useEditorStore((s) => s.editor);
 
   useEffect(() => {
-    if (!editor) return
-    const monaco = (window as any).monaco as typeof import("monaco-editor")
-    if (!monaco) return
+    if (!editor) return;
+
+    const monaco = (window as any).monaco as typeof import("monaco-editor");
+
+    if (!monaco) return;
+
     const handler = debounce(async () => {
-      const model = editor.getModel()
+      const model = editor.getModel();
       if (!model || !isJsTs(model.getLanguageId())) {
-        setHover(undefined)
-        return
+        setHover(undefined);
+        return;
       }
       try {
-        const info = await getHoverAt(monaco, editor)
-        setHover(info)
+        const info = await getHoverAt(monaco, editor);
+        setHover(info);
       } catch {
-        setHover(undefined)
+        setHover(undefined);
       }
-    }, 500)
-    const d1 = editor.onDidChangeCursorPosition(handler)
-    const d2 = editor.onDidChangeModelContent(handler)
-    const d3 = editor.onDidChangeModel(handler)
-    handler()
+    }, 500);
+    const d1 = editor.onDidChangeCursorPosition(handler);
+    const d2 = editor.onDidChangeModelContent(handler);
+    const d3 = editor.onDidChangeModel(handler);
+    handler();
     return () => {
-      d1.dispose()
-      d2.dispose()
-      d3.dispose()
-    }
-  }, [editor, setHover])
+      d1.dispose();
+      d2.dispose();
+      d3.dispose();
+    };
+  }, [editor, setHover]);
 }
-
-
