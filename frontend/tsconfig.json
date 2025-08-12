@@ -20,6 +20,9 @@
     },
     "noEmit": true,
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": [
+    "../frontend/src/**/*.ts", 
+    "../frontend/src/**/*.tsx"
+  ],
   "exclude": ["src/**/*.js", "src/**/*.jsx"]
 }
