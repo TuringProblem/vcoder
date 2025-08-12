@@ -43,6 +43,8 @@ const LS_KEYS = {
 }
 
 const initialTemplates = getTemplates()
+console.log(initialTemplates);
+
 
 export const useEditorStore = create<EditorStore>((set, get) => ({
   language: "javascript",
