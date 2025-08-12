@@ -16,13 +16,13 @@
       "@/pages/*": ["src/pages/*"],
       "@/lib/*": ["src/lib/*"],
       "@/data/*": ["src/data/*"],
-      "@/types/*": ["src/types/*"]
+      "@/types/*": ["src/types/*"],
     },
     "noEmit": true,
   },
   "include": [
     "../frontend/src/**/*.ts", 
-    "../frontend/src/**/*.tsx"
+    "../frontend/src/**/*.tsx",
   ],
-  "exclude": ["src/**/*.js", "src/**/*.jsx"]
+  "exclude": ["src/**/*.js", "src/**/*.jsx",]
 }
