@@ -1,22 +1,24 @@
-"use client"
-
-import type { AnalysisResponse } from "@/types/analysis"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { BarChart2, CheckCircle, ListChecks } from "lucide-react"
+import type { AnalysisResponse } from "@/types/analysis";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { BarChart2, CheckCircle, ListChecks } from "lucide-react";
 
 export function QualityTab({
   data,
   isLoading,
 }: {
-  data?: AnalysisResponse
-  isLoading?: boolean
+  data?: AnalysisResponse;
+  isLoading?: boolean;
 }) {
-  const q = data?.quality
+  const q = data?.quality;
   if (isLoading) {
-    return <div className="text-sm text-muted-foreground">Evaluating code quality…</div>
+    return (
+      <div className="text-sm text-muted-foreground">
+        Evaluating code quality…
+      </div>
+    );
   }
-  if (!q) return null
+  if (!q) return null;
   return (
     <div className="space-y-3">
       <Card>
@@ -59,14 +61,16 @@ export function QualityTab({
               <div>
                 <div className="font-medium">{s.title}</div>
                 <div className="text-muted-foreground">{s.detail}</div>
-                {s.why && <div className="text-xs text-muted-foreground">Why: {s.why}</div>}
+                {s.why && (
+                  <div className="text-xs text-muted-foreground">
+                    Why: {s.why}
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
-
-

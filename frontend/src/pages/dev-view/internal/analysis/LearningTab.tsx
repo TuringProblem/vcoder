@@ -9,13 +9,18 @@ import { getLessonPrompt } from "@/data/lessons/metadata";
 import { useEditorStore } from "@/pages/dev-view/store";
 
 type QuestionInputProps = {
-  question: string
-  isAsking: boolean
-  onQuestionChange: (value: string) => void
-  onAskQuestion: () => void
-}
+  question: string;
+  isAsking: boolean;
+  onQuestionChange: (value: string) => void;
+  onAskQuestion: () => void;
+};
 
-function QuestionInput({ question, isAsking, onQuestionChange, onAskQuestion }: QuestionInputProps) {
+function QuestionInput({
+  question,
+  isAsking,
+  onQuestionChange,
+  onAskQuestion,
+}: QuestionInputProps) {
   return (
     <div className="space-y-2">
       <Input
@@ -25,26 +30,26 @@ function QuestionInput({ question, isAsking, onQuestionChange, onAskQuestion }: 
         onKeyPress={(e) => e.key === "Enter" && onAskQuestion()}
         disabled={isAsking}
       />
-      <Button 
-        onClick={onAskQuestion} 
+      <Button
+        onClick={onAskQuestion}
         disabled={!question.trim() || isAsking}
         size="sm"
       >
         {isAsking ? t("common.loading") : "Ask Question"}
       </Button>
     </div>
-  )
+  );
 }
 
 type LearningTopicProps = {
   topic: {
-    title: string
-    explanation: string
-    example?: string
-    links?: { label: string; url: string }[]
-  }
-  index: number
-}
+    title: string;
+    explanation: string;
+    example?: string;
+    links?: { label: string; url: string }[];
+  };
+  index: number;
+};
 
 function LearningTopic({ topic, index }: LearningTopicProps) {
   return (
@@ -77,17 +82,17 @@ function LearningTopic({ topic, index }: LearningTopicProps) {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
 
 type LearningTopicsListProps = {
   topics: {
-    title: string
-    explanation: string
-    example?: string
-    links?: { label: string; url: string }[]
-  }[]
-}
+    title: string;
+    explanation: string;
+    example?: string;
+    links?: { label: string; url: string }[];
+  }[];
+};
 
 function LearningTopicsList({ topics }: LearningTopicsListProps) {
   return (
@@ -96,7 +101,7 @@ function LearningTopicsList({ topics }: LearningTopicsListProps) {
         <LearningTopic key={index} topic={topic} index={index} />
       ))}
     </>
-  )
+  );
 }
 
 export function LearningTab({
@@ -116,17 +121,17 @@ export function LearningTab({
   const [isAsking, setIsAsking] = useState(false);
   const language = useEditorStore((s) => s.language);
 
-  const lessonPrompt = lessonContext 
+  const lessonPrompt = lessonContext
     ? getLessonPrompt(
         lessonContext.language as any,
         lessonContext.section as any,
-        parseInt(lessonContext.lesson.replace("lesson-", ""))
+        parseInt(lessonContext.lesson.replace("lesson-", "")),
       )
     : t("analysis.learning.promptPlaceholder");
 
   const handleAskQuestion = async () => {
     if (!question.trim()) return;
-    
+
     setIsAsking(true);
     // TODO: Implement actual question asking functionality
     // This would typically call an API to get an AI response
@@ -143,7 +148,7 @@ export function LearningTab({
       </div>
     );
   }
-  
+
   if (!data) return null;
 
   return (

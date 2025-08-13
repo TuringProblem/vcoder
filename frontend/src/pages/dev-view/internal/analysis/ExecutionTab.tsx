@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import type { AnalysisResponse } from "@/types/analysis"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import type { AnalysisResponse } from "@/types/analysis";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type ExecutionStepProps = {
   step: {
-    title: string
-    detail: string
-  }
-  index: number
-}
+    title: string;
+    detail: string;
+  };
+  index: number;
+};
 
 function ExecutionStep({ step, index }: ExecutionStepProps) {
   return (
@@ -20,15 +20,15 @@ function ExecutionStep({ step, index }: ExecutionStepProps) {
         <div className="text-muted-foreground">{step.detail}</div>
       </div>
     </div>
-  )
+  );
 }
 
 type ExecutionStepsListProps = {
   steps: {
-    title: string
-    detail: string
-  }[]
-}
+    title: string;
+    detail: string;
+  }[];
+};
 
 function ExecutionStepsList({ steps }: ExecutionStepsListProps) {
   return (
@@ -37,30 +37,30 @@ function ExecutionStepsList({ steps }: ExecutionStepsListProps) {
         <ExecutionStep key={index} step={step} index={index} />
       ))}
     </>
-  )
+  );
 }
 
 type LoadingStateProps = {
-  message: string
-}
+  message: string;
+};
 
 function LoadingState({ message }: LoadingStateProps) {
-  return <div className="text-sm text-muted-foreground">{message}</div>
+  return <div className="text-sm text-muted-foreground">{message}</div>;
 }
 
 export function ExecutionTab({
   data,
   isLoading,
 }: {
-  data?: AnalysisResponse
-  isLoading?: boolean
+  data?: AnalysisResponse;
+  isLoading?: boolean;
 }) {
   if (isLoading) {
-    return <LoadingState message="Tracing execution…" />
+    return <LoadingState message="Tracing execution…" />;
   }
-  
-  if (!data) return null
-  
+
+  if (!data) return null;
+
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -70,7 +70,5 @@ export function ExecutionTab({
         <ExecutionStepsList steps={data.executionFlow.steps} />
       </CardContent>
     </Card>
-  )
+  );
 }
-
-

@@ -1,29 +1,29 @@
-"use client"
-
-import type { AnalysisResponse } from "@/types/analysis"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import type { AnalysisResponse } from "@/types/analysis";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type ComplexityDisplayProps = {
-  bigO: string
-}
+  bigO: string;
+};
 
 function ComplexityDisplay({ bigO }: ComplexityDisplayProps) {
   return (
     <div>
-      <span className="text-xs text-muted-foreground">Estimated Complexity</span>
+      <span className="text-xs text-muted-foreground">
+        Estimated Complexity
+      </span>
       <div className="font-medium">{bigO}</div>
     </div>
-  )
+  );
 }
 
 type PerformanceHotspotProps = {
   hotspot: {
-    title: string
-    line: number
-    detail: string
-  }
-  index: number
-}
+    title: string;
+    line: number;
+    detail: string;
+  };
+  index: number;
+};
 
 function PerformanceHotspot({ hotspot, index }: PerformanceHotspotProps) {
   return (
@@ -34,16 +34,16 @@ function PerformanceHotspot({ hotspot, index }: PerformanceHotspotProps) {
         <div className="text-muted-foreground">{hotspot.detail}</div>
       </div>
     </div>
-  )
+  );
 }
 
 type PerformanceHotspotsListProps = {
   hotspots: {
-    title: string
-    line: number
-    detail: string
-  }[]
-}
+    title: string;
+    line: number;
+    detail: string;
+  }[];
+};
 
 function PerformanceHotspotsList({ hotspots }: PerformanceHotspotsListProps) {
   return (
@@ -52,63 +52,72 @@ function PerformanceHotspotsList({ hotspots }: PerformanceHotspotsListProps) {
         <PerformanceHotspot key={index} hotspot={hotspot} index={index} />
       ))}
     </>
-  )
+  );
 }
 
 type PerformanceSuggestionProps = {
   suggestion: {
-    title: string
-    detail: string
-  }
-  index: number
-}
+    title: string;
+    detail: string;
+  };
+  index: number;
+};
 
-function PerformanceSuggestion({ suggestion, index }: PerformanceSuggestionProps) {
+function PerformanceSuggestion({
+  suggestion,
+  index,
+}: PerformanceSuggestionProps) {
   return (
     <div key={index} className="text-muted-foreground">
       {suggestion.title}: {suggestion.detail}
     </div>
-  )
+  );
 }
 
 type PerformanceSuggestionsListProps = {
   suggestions: {
-    title: string
-    detail: string
-  }[]
-}
+    title: string;
+    detail: string;
+  }[];
+};
 
-function PerformanceSuggestionsList({ suggestions }: PerformanceSuggestionsListProps) {
+function PerformanceSuggestionsList({
+  suggestions,
+}: PerformanceSuggestionsListProps) {
   return (
     <>
       {suggestions.map((suggestion, index) => (
-        <PerformanceSuggestion key={index} suggestion={suggestion} index={index} />
+        <PerformanceSuggestion
+          key={index}
+          suggestion={suggestion}
+          index={index}
+        />
       ))}
     </>
-  )
+  );
 }
 
 type LoadingStateProps = {
-  message: string
-}
+  message: string;
+};
 
 function LoadingState({ message }: LoadingStateProps) {
-  return <div className="text-sm text-muted-foreground">{message}</div>
+  return <div className="text-sm text-muted-foreground">{message}</div>;
 }
 
 export function PerformanceTab({
   data,
   isLoading,
 }: {
-  data?: AnalysisResponse
-  isLoading?: boolean
+  data?: AnalysisResponse;
+  isLoading?: boolean;
 }) {
   if (isLoading) {
-    return <LoadingState message="Analyzing performance…" />
+    return <LoadingState message="Analyzing performance…" />;
   }
-  
-  if (!data) return null
-  
+
+  if (!data) return null;
+
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -117,10 +126,10 @@ export function PerformanceTab({
       <CardContent className="space-y-2 text-sm">
         <ComplexityDisplay bigO={data.performance.bigO} />
         <PerformanceHotspotsList hotspots={data.performance.hotspots} />
-        <PerformanceSuggestionsList suggestions={data.performance.suggestions} />
+        <PerformanceSuggestionsList
+          suggestions={data.performance.suggestions}
+        />
       </CardContent>
     </Card>
-  )
+  );
 }
-
-
