@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "npm run clean:js && tsc -b && vite build",
     "preview": "vite preview",
-    "clean:js": "node scripts/clean-js.mjs"
+    "clean:js": "node scripts/clean-js.mjs",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@monaco-editor/react": "4.6.0",
@@ -28,14 +30,25 @@
     "zustand": "^5.0.7"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
+    "@testing-library/jest-dom": "^6.7.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "22.7.4",
     "@types/react": "18.3.8",
     "@types/react-dom": "18.3.0",
     "@vitejs/plugin-react": "4.3.1",
     "autoprefixer": "10.4.20",
+    "babel-jest": "^30.0.5",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
     "postcss": "8.4.47",
     "shadcn-ui": "0.9.4",
     "tailwindcss": "3.4.10",
+    "ts-jest": "^29.4.1",
     "typescript": "5.6.2",
     "vite": "5.4.3"
   }
